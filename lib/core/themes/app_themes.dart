@@ -12,7 +12,7 @@ class AppThemes {
       fontFamily: GoogleFonts.poppins().fontFamily);
 
   static final darkTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondaryColor),
       useMaterial3: true,
       fontFamily: GoogleFonts.poppins().fontFamily);
 }
