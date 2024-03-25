@@ -23,10 +23,10 @@ class _OnBoardState extends State<OnBoard> {
             children: [
               24.h.heightBox,
               Image.asset(
-                AppAssets.mainLogo,
+                Assets.assetsImagesLogo,
                 height: 42.h,
                 width: 139.w,
-                fit: BoxFit.cover,
+                fit: BoxFit.fitWidth,
                 color: AppColors.primaryColor,
               ),
               24.h.heightBox,
@@ -43,7 +43,7 @@ class _OnBoardState extends State<OnBoard> {
 
               ///Bottom Section
               SolidButton(
-                onTap: () {},
+                onTap: () => AutoRouter.of(context).push(const AuthRoute()),
                 child: "Get Started"
                     .text
                     .size(16.sp)

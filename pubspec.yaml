@@ -41,6 +41,11 @@ flutter:
   assets:
     - assets/images/
 
+flutter_assets:
+  assets_path: assets/images/
+  output_path: lib/core/constants/
+  filename: app_assets.dart
+
   # fonts:
   #   - family: Schyler
   #     fonts:

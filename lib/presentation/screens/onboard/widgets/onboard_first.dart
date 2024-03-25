@@ -8,13 +8,14 @@ class OnBoardFirst extends StatelessWidget {
     return Column(
       children: [
         Image.asset(
-          'assets/images/onboard_1.png',
+          Assets.assetsImagesOnboard1,
           height: 333.h,
           width: 333.w,
           fit: BoxFit.cover,
         ),
         "Discover, engage and read the latest articles oras well as share your own thoughts and ideas with the community"
-            .text.align(TextAlign.center)
+            .text
+            .align(TextAlign.center)
             .size(15.sp)
             .color(Colors.black)
             .fontWeight(FontWeight.w500)
