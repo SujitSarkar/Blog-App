@@ -1,5 +1,9 @@
 class Assets {
   Assets._();
+  
+  /// Assets for assetsImagesKualalampur
+  /// assets/images/kualalampur.jpeg
+  static const String assetsImagesKualalampur = "assets/images/kualalampur.jpeg";
 
   /// Assets for assetsImagesLoginBg
   /// assets/images/login_bg.jpg
@@ -29,3 +33,4 @@ class Assets {
   /// assets/images/user.png
   static const String assetsImagesUser = "assets/images/user.png";
 }
+

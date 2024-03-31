@@ -19,7 +19,11 @@ class _GeneralState extends State<General> {
   int visit = 0;
 
   List<Widget> pages = const [
-    Home(),Tags(),AddPosts(),Categories(),Profile()
+    Home(),
+    Categories(),
+    AddPosts(),
+    Tags(),
+    Profile()
   ];
 
   @override

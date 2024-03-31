@@ -7,10 +7,12 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  late TabController tabController;
   @override
   void initState() {
     super.initState();
+    tabController = TabController(length: 4, vsync: this);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
         statusBarIconBrightness: Brightness.dark));
@@ -61,35 +63,38 @@ class _HomeState extends State<Home> {
           ),
           12.h.heightBox,
           SizedBox(
-            height: 40.h,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              scrollDirection: Axis.horizontal,
-              children: ['Nature', 'Tech', 'DIY', 'Health']
+            height: 32.h,
+            child: TabBar(
+              controller: tabController,
+              unselectedLabelColor: Colors.grey,
+              indicatorSize: TabBarIndicatorSize.label,
+              labelColor: AppColors.primaryColor,
+              dividerColor: Colors.transparent,
+              indicatorColor: AppColors.primaryColor,
+              isScrollable: true,
+              onTap: (value) {
+                debugPrint(value.toString());
+              },
+              tabs: ['Nature', 'Tech', 'DIY', 'Health']
                   .map(
-                    (item) => InkWell(
-                      onTap: () {},
-                      borderRadius: BorderRadius.all(Radius.circular(50.r)),
-                      child: Container(
-                        margin: EdgeInsets.only(right: 8.w),
-                        alignment: Alignment.center,
-                        width: 100.w,
-                        padding: EdgeInsets.symmetric(horizontal: 12.sp),
-                        decoration: BoxDecoration(
-                            border: Border.all(
-                                color: AppColors.primaryColor, width: 1.sp),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(50.r))),
-                        child: item.text
-                            .size(12.sp)
-                            .fontWeight(FontWeight.w600)
-                            .make(),
-                      ),
+                    (item) => Tab(
+                      text: item,
                     ),
                   )
                   .toList(),
             ),
-          )
+          ),
+          Expanded(
+              child: GridView.builder(
+            padding: EdgeInsets.all(16.w),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.8,
+                crossAxisSpacing: 16.w,
+                mainAxisSpacing: 12.h),
+            itemCount: 10,
+            itemBuilder: (context, index) => HomeGridTile(index: index),
+          ))
         ],
       ),
     ));
