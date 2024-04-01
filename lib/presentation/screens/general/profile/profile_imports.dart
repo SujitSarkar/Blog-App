@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import 'widgets/widget_imports.dart';
 
 part 'profile.dart';
 part 'profile_view_model.dart';

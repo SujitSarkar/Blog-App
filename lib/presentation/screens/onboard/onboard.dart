@@ -43,7 +43,9 @@ class _OnBoardState extends State<OnBoard> {
 
               ///Bottom Section
               SolidButton(
-                onTap: () => AutoRouter.of(context).push(const AuthRoute()),
+                onTap: () {
+                  AutoRouter.of(context).push(const AuthRoute());
+                },
                 child: "Get Started"
                     .text
                     .size(16.sp)

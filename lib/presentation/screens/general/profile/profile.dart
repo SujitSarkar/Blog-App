@@ -136,6 +136,23 @@ class _ProfileState extends State<Profile> {
               ],
             ),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+            child:
+                'My Posts'.text.size(18.sp).fontWeight(FontWeight.w600).make(),
+          ),
+          GridView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: 0.85,
+                crossAxisSpacing: 16.w,
+                mainAxisSpacing: 12.h),
+            itemCount: 10,
+            itemBuilder: (context, index) => MyPostGridTile(index: index),
+          )
         ],
       ),
     );

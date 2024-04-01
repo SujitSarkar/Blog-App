@@ -51,7 +51,6 @@ class _RegisterState extends State<Register> {
                     prefixIcon: Icons.email_outlined,
                   ),
                   20.h.heightBox,
-
                   TextFormFieldWidget(
                     controller: TextEditingController(),
                     labelText: 'Password',
@@ -60,7 +59,6 @@ class _RegisterState extends State<Register> {
                     obscure: true,
                   ),
                   20.h.heightBox,
-
                   TextFormFieldWidget(
                     controller: TextEditingController(),
                     labelText: 'Confirm Password',
@@ -69,12 +67,10 @@ class _RegisterState extends State<Register> {
                     obscure: true,
                   ),
                   12.h.heightBox,
-
                   CheckboxListTile(
-                    side: const BorderSide(
-                        color: AppColors.primaryColor),
+                    side: const BorderSide(color: AppColors.primaryColor),
                     value: false,
-                    onChanged: (newValue){},
+                    onChanged: (newValue) {},
                     title: "Remember me"
                         .text
                         .size(12.sp)
@@ -86,15 +82,16 @@ class _RegisterState extends State<Register> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   20.h.heightBox,
-
-                  SolidButton(onTap: (){}, child:  "Sign Up"
-                      .text
-                      .size(16.sp)
-                      .color(Colors.white)
-                      .fontWeight(FontWeight.w600)
-                      .make(),),
+                  SolidButton(
+                    onTap: () {},
+                    child: "Sign Up"
+                        .text
+                        .size(16.sp)
+                        .color(Colors.white)
+                        .fontWeight(FontWeight.w600)
+                        .make(),
+                  ),
                   40.h.heightBox,
-
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
@@ -105,10 +102,13 @@ class _RegisterState extends State<Register> {
                         const TextSpan(text: 'Already have an account? '),
                         TextSpan(
                           text: 'Login',
-                          style: const TextStyle(color: AppColors.primaryColor,fontWeight: FontWeight.w700),
-                          recognizer: TapGestureRecognizer()..onTap = () {
-                            AutoRouter.of(context).pop();
-                          },
+                          style: const TextStyle(
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.w700),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              context.back();
+                            },
                         ),
                       ],
                     ),
