@@ -1,12 +1,12 @@
 part of 'remote_imports.dart';
 
 class ApiClient {
-  late BaseOptions options;
+  late BaseOptions baseOptions;
   late Dio dio;
 
   ApiClient() {
-    options = BaseOptions(baseUrl: ApiConstant.baseUrl);
-    dio = Dio(options);
+    baseOptions = BaseOptions(baseUrl: ApiConstant.baseUrl);
+    dio = Dio(baseOptions);
     dio.interceptors.add(PrettyDioLogger());
   }
 
@@ -23,9 +23,10 @@ class ApiClient {
     }
   }
 
-  Future<Response> postRequest({required String path}) async {
+  Future<Response> postRequest(
+      {required String path, Map<String, dynamic>? body}) async {
     try {
-      Response response = await dio.post(path);
+      Response response = await dio.post(path, data: body);
       return response;
     } on DioException catch (e) {
       if (e.response != null) {

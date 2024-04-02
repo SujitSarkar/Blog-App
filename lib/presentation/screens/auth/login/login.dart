@@ -9,6 +9,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  late LoginViewModel loginViewModel;
+  @override
+  void initState() {
+    loginViewModel = LoginViewModel(repository: context.read<Repository>());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,100 +40,105 @@ class _LoginState extends State<Login> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(24.r),
                       topRight: Radius.circular(24.r))),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  64.h.heightBox,
-                  "Login"
-                      .text
-                      .size(18.sp)
-                      .color(AppColors.primaryColor)
-                      .fontWeight(FontWeight.w700)
-                      .make(),
-                  48.h.heightBox,
-                  TextFormFieldWidget(
-                    controller: TextEditingController(),
-                    labelText: 'Email',
-                    hintText: 'Email',
-                    prefixIcon: Icons.email_outlined,
-                  ),
-                  20.h.heightBox,
-                  TextFormFieldWidget(
-                    controller: TextEditingController(),
-                    labelText: 'Password',
-                    hintText: 'Password',
-                    prefixIcon: Icons.lock_outline,
-                    obscure: true,
-                  ),
-                  12.h.heightBox,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: CheckboxListTile(
-                          side: const BorderSide(color: AppColors.primaryColor),
-                          value: false,
-                          onChanged: (newValue) {},
-                          title: "Remember me"
-                              .text
-                              .size(12.sp)
-                              .color(AppColors.primaryColor)
-                              .fontWeight(FontWeight.w600)
-                              .make(),
-                          contentPadding: EdgeInsets.zero,
-                          dense: true,
-                          controlAffinity: ListTileControlAffinity.leading,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 8.w),
-                        child: InkWell(
-                          onTap: () {},
-                          child: "Forgot your password"
-                              .text
-                              .size(12.sp)
-                              .color(AppColors.primaryColor)
-                              .fontWeight(FontWeight.w600)
-                              .make(),
-                        ),
-                      ),
-                    ],
-                  ),
-                  20.h.heightBox,
-                  SolidButton(
-                    onTap: () =>
-                        AutoRouter.of(context).push(const GeneralRoute()),
-                    child: "Login"
+              child: Form(
+                key: loginViewModel.loginFormKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    64.h.heightBox,
+                    "Login"
                         .text
-                        .size(16.sp)
-                        .color(Colors.white)
-                        .fontWeight(FontWeight.w600)
+                        .size(18.sp)
+                        .color(AppColors.primaryColor)
+                        .fontWeight(FontWeight.w700)
                         .make(),
-                  ),
-                  40.h.heightBox,
-                  RichText(
-                    text: TextSpan(
-                      style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.primaryColor),
+                    48.h.heightBox,
+                    TextFormFieldWidget(
+                      controller: loginViewModel.email,
+                      labelText: 'Email',
+                      hintText: 'Email',
+                      required: true,
+                      prefixIcon: Icons.email_outlined,
+                    ),
+                    20.h.heightBox,
+                    TextFormFieldWidget(
+                      controller: loginViewModel.password,
+                      labelText: 'Password',
+                      hintText: 'Password',
+                      required: true,
+                      prefixIcon: Icons.lock_outline,
+                      obscure: true,
+                    ),
+                    12.h.heightBox,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const TextSpan(text: 'Don’t have an account? '),
-                        TextSpan(
-                          text: 'Sign Up',
-                          style: const TextStyle(
-                              color: AppColors.primaryColor,
-                              fontWeight: FontWeight.w700),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              AutoRouter.of(context)
-                                  .push(const RegisterRoute());
-                            },
+                        Expanded(
+                          child: CheckboxListTile(
+                            side:
+                                const BorderSide(color: AppColors.primaryColor),
+                            value: false,
+                            onChanged: (newValue) {},
+                            title: "Remember me"
+                                .text
+                                .size(12.sp)
+                                .color(AppColors.primaryColor)
+                                .fontWeight(FontWeight.w600)
+                                .make(),
+                            contentPadding: EdgeInsets.zero,
+                            dense: true,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 8.w),
+                          child: InkWell(
+                            onTap: () {},
+                            child: "Forgot your password"
+                                .text
+                                .size(12.sp)
+                                .color(AppColors.primaryColor)
+                                .fontWeight(FontWeight.w600)
+                                .make(),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    20.h.heightBox,
+                    SolidButton(
+                      onTap: () => loginViewModel.login(context),
+                      child: "Login"
+                          .text
+                          .size(16.sp)
+                          .color(Colors.white)
+                          .fontWeight(FontWeight.w600)
+                          .make(),
+                    ),
+                    40.h.heightBox,
+                    RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.primaryColor),
+                        children: [
+                          const TextSpan(text: 'Don’t have an account? '),
+                          TextSpan(
+                            text: 'Sign Up',
+                            style: const TextStyle(
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.w700),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                AutoRouter.of(context)
+                                    .push(const RegisterRoute());
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             )
           ],

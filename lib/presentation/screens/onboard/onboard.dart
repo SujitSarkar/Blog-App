@@ -9,6 +9,14 @@ class OnBoard extends StatefulWidget {
 }
 
 class _OnBoardState extends State<OnBoard> {
+  @override
+  void initState() {
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        statusBarColor: Colors.white,
+        statusBarIconBrightness: Brightness.dark));
+    super.initState();
+  }
+
   OnboardViewModel onboardViewModel = OnboardViewModel();
 
   @override

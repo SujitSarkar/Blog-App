@@ -1,1 +1,30 @@
-class LoginModel{}
+import 'dart:convert';
+
+LoginModel loginModelFromJson(String str) =>
+    LoginModel.fromJson(json.decode(str));
+
+String loginModelToJson(LoginModel data) => json.encode(data.toJson());
+
+class LoginModel {
+  final String? message;
+  final String? accessToken;
+  final String? tokenType;
+
+  LoginModel({
+    this.message,
+    this.accessToken,
+    this.tokenType,
+  });
+
+  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
+        message: json["message"],
+        accessToken: json["access_token"],
+        tokenType: json["token_type"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "message": message,
+        "access_token": accessToken,
+        "token_type": tokenType,
+      };
+}

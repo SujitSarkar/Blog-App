@@ -7,12 +7,15 @@ class AppThemes {
   const AppThemes._();
 
   static final lightTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.primaryColor, primary: AppColors.primaryColor),
       useMaterial3: true,
       fontFamily: GoogleFonts.poppins().fontFamily);
 
   static final darkTheme = ThemeData(
-      colorScheme: ColorScheme.fromSeed(seedColor: AppColors.secondaryColor),
+      colorScheme: ColorScheme.fromSeed(
+          seedColor: AppColors.secondaryColor,
+          primary: AppColors.secondaryColor),
       useMaterial3: true,
       fontFamily: GoogleFonts.poppins().fontFamily);
 }
