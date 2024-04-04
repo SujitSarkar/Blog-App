@@ -25,8 +25,11 @@ class ApiClient {
 
   Future<Response> postRequest(
       {required String path, Map<String, dynamic>? body}) async {
+    final token = await Utils.getToken();
+    final Options options =
+        Options(headers: {'Authorization': 'Bearer $token'});
     try {
-      Response response = await dio.post(path, data: body);
+      Response response = await dio.post(path, data: body, options: options);
       return response;
     } on DioException catch (e) {
       if (e.response != null) {

@@ -5,7 +5,7 @@ import '../core/router/router_imports.gr.dart';
 
 class Utils {
   static Future<void> manipulateLogin(context) async {
-    var token = await getToken();
+    final token = await getToken();
     if (token != null) {
       AutoRouter.of(context).replace(const GeneralRoute());
     } else {

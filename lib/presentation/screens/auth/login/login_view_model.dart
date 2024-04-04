@@ -13,18 +13,13 @@ class LoginViewModel {
     if (!loginFormKey.currentState!.validate()) {
       return;
     }
-    if (!email.text.isValidEmail) {
-      VxToast.show(context, msg: 'Invalid Email');
-      return;
-    }
-
-    if (!password.text.isValidPassword) {
-      VxToast.show(context, msg: 'Invalid Password');
-      return;
-    }
     try {
-      await repository.authRepo
-          .userLogin(email: email.text, password: password.text);
+      final LoginModel loginModel = await repository.authRepo
+          .userLogin(email: email.text.trim(), password: password.text);
+      if (loginModel.accessToken != null) {
+        await Utils.saveToken(loginModel.accessToken!.toString()).then(
+            (value) => AutoRouter.of(context).replace(const GeneralRoute()));
+      }
     } on Exception catch (e) {
       // ignore: use_build_context_synchronously
       VxToast.show(context, msg: e.toString());

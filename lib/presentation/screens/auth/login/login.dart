@@ -59,6 +59,7 @@ class _LoginState extends State<Login> {
                       hintText: 'Email',
                       required: true,
                       prefixIcon: Icons.email_outlined,
+                      textInputType: TextInputType.emailAddress,
                     ),
                     20.h.heightBox,
                     TextFormFieldWidget(
@@ -68,6 +69,7 @@ class _LoginState extends State<Login> {
                       required: true,
                       prefixIcon: Icons.lock_outline,
                       obscure: true,
+                      textInputType: TextInputType.visiblePassword,
                     ),
                     12.h.heightBox,
                     Row(

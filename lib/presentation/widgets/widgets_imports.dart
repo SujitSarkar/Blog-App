@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:blog_app/utils/validations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

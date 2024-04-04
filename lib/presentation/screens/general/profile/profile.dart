@@ -8,6 +8,13 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  late ProfileViewModel profileViewModel;
+  @override
+  void initState() {
+    profileViewModel = ProfileViewModel(repository: context.read<Repository>());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +23,10 @@ class _ProfileState extends State<Profile> {
         backgroundColor: AppColors.primaryColor,
         actions: [
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                debugPrint('Logout');
+                profileViewModel.logout(context);
+              },
               icon: const Icon(
                 FeatherIcons.logOut,
                 color: Colors.white,

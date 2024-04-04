@@ -6,6 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_colors.dart';
-import '../../../core/router/router_imports.gr.dart';
+import '../../../utils/utils.dart';
 
 part 'splash.dart';

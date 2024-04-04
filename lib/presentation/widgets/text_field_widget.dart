@@ -73,11 +73,31 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
             .color(AppColors.primaryColor)
             .make(),
         12.h.heightBox,
-
         TextFormField(
-          validator: (val) => !widget.required || val != null && val.isNotEmpty
-              ? null
-              : "${widget.labelText} can't be empty",
+          validator: (value) {
+            if (widget.required && value != null && value.isEmpty) {
+              return "${widget.labelText} can't be empty";
+            } else if (widget.required &&
+                value != null &&
+                widget.textInputType == TextInputType.emailAddress &&
+                !value.isValidEmail) {
+              return "Invalid email address";
+            }
+            // else if (widget.required &&
+            //     value != null &&
+            //     widget.textInputType == TextInputType.visiblePassword &&
+            //     !value.isValidEmail) {
+            //   VxToast.show(context,
+            //       msg:
+            //           "Password must contain one upper and lower case combination, at least one number and special charecter",
+            //       position: VxToastPosition.top,
+            //       showTime: 5000);
+            //   return "Password must contain one upper and lower case combination, at least one number and special charecter";
+            // }
+            else {
+              return null;
+            }
+          },
           controller: widget.controller,
           onTap: widget.onTap,
           focusNode: widget.focusNode,
@@ -104,9 +124,11 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
               errorText: widget.validationErrorMessage,
               alignLabelWithHint: true,
               border: OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                  borderSide:
-                      BorderSide(color: AppColors.primaryColor, width: 1.sp,)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                  borderSide: BorderSide(
+                    color: AppColors.primaryColor,
+                    width: 1.sp,
+                  )),
               enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10.r)),
                   borderSide:
@@ -121,7 +143,7 @@ class _TextFormFieldWidgetState extends State<TextFormFieldWidget> {
                       BorderSide(color: AppColors.errorColor, width: 1.sp)),
               isDense: true,
               contentPadding: widget.contentPadding ??
-                  EdgeInsets.symmetric(horizontal:12.sp, vertical: 16.sp),
+                  EdgeInsets.symmetric(horizontal: 12.sp, vertical: 16.sp),
               floatingLabelAlignment: FloatingLabelAlignment.start,
               hintText: widget.hintText,
               floatingLabelBehavior: FloatingLabelBehavior.auto,
