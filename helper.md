@@ -11,7 +11,7 @@ dart run build_runner build
 ```
 
 ## Create Asset class of pubspec.yaml assets
-Add this ```Flutter Assets Get``` plugin in VS-Code <br>
+Add this ```Flutter Assets Gen``` plugin in VS-Code <br>
 Add this lines in ```pubspec.yaml```:
 ```
   assets:
