@@ -107,14 +107,20 @@ class _LoginState extends State<Login> {
                       ],
                     ),
                     20.h.heightBox,
-                    SolidButton(
-                      onTap: () => loginViewModel.login(context),
-                      child: "Login"
-                          .text
-                          .size(16.sp)
-                          .color(Colors.white)
-                          .fontWeight(FontWeight.w600)
-                          .make(),
+                    BlocBuilder<VelocityBloc<bool>, VelocityState<bool>>(
+                      bloc: loginViewModel.isLoadingBloc,
+                      builder: (context,state) {
+                        return SolidButton(
+                          onTap: () => loginViewModel.login(context),
+                          isLoading: state.data,
+                          child: "Login"
+                              .text
+                              .size(16.sp)
+                              .color(Colors.white)
+                              .fontWeight(FontWeight.w600)
+                              .make(),
+                        );
+                      }
                     ),
                     40.h.heightBox,
                     RichText(

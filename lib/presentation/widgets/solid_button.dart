@@ -5,6 +5,7 @@ class SolidButton extends StatelessWidget {
       {super.key,
       required this.onTap,
       required this.child,
+      this.isLoading=false,
       this.width,
       this.height,
       this.backgroundColor,
@@ -12,6 +13,7 @@ class SolidButton extends StatelessWidget {
       this.splashColor});
   final Function() onTap;
   final Widget child;
+  final bool isLoading;
   final double? width;
   final double? height;
   final Color? backgroundColor;
@@ -34,6 +36,6 @@ class SolidButton extends StatelessWidget {
                 overlayColor: splashColor ??
                     MaterialStateProperty.all(Colors.white.withOpacity(0.5))),
         onPressed: onTap,
-        child: child);
+        child: isLoading? const LoadingWidget(color: Colors.white) :child);
   }
 }

@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:blog_app/presentation/widgets/widgets_imports.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:velocity_bloc/velocity_bloc.dart';
 
 import '../../../../core/constants/app_assets.dart';
 import 'package:feather_icons/feather_icons.dart';

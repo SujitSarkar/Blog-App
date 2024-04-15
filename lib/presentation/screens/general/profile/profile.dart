@@ -9,6 +9,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late ProfileViewModel profileViewModel;
+
   @override
   void initState() {
     profileViewModel = ProfileViewModel(repository: context.read<Repository>());
@@ -22,15 +23,20 @@ class _ProfileState extends State<Profile> {
         automaticallyImplyLeading: false,
         backgroundColor: AppColors.primaryColor,
         actions: [
-          IconButton(
-              onPressed: () {
-                debugPrint('Logout');
-                profileViewModel.logout(context);
-              },
-              icon: const Icon(
-                FeatherIcons.logOut,
-                color: Colors.white,
-              ))
+          BlocBuilder<VelocityBloc<bool>, VelocityState<bool>>(
+            bloc: profileViewModel.isLoadingBloc,
+            builder: (context, state) {
+              return IconButton(
+                  onPressed: () {
+                    debugPrint('Logout');
+                    profileViewModel.logout(context);
+                  },
+                  icon: state.data? const LoadingWidget(color: Colors.white) :const Icon(
+                    FeatherIcons.logOut,
+                    color: Colors.white,
+                  ));
+            },
+          )
         ],
       ),
       body: ListView(
@@ -48,7 +54,7 @@ class _ProfileState extends State<Profile> {
               children: [
                 CircleAvatar(
                   backgroundImage:
-                      const AssetImage(Assets.assetsImagesKualalampur),
+                  const AssetImage(Assets.assetsImagesKualalampur),
                   radius: 64.r,
                 ),
                 12.h.heightBox,
@@ -149,7 +155,7 @@ class _ProfileState extends State<Profile> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
             child:
-                'My Posts'.text.size(18.sp).fontWeight(FontWeight.w600).make(),
+            'My Posts'.text.size(18.sp).fontWeight(FontWeight.w600).make(),
           ),
           GridView.builder(
             padding: EdgeInsets.symmetric(horizontal: 16.w),

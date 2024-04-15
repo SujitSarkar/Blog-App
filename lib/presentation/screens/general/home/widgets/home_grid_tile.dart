@@ -1,9 +1,9 @@
 part of 'widget_imports.dart';
 
 class HomeGridTile extends StatelessWidget {
-  final int index;
+  final HomeModel homeModel;
 
-  const HomeGridTile({super.key, required this.index});
+  const HomeGridTile({super.key, required this.homeModel});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,7 @@ class HomeGridTile extends StatelessWidget {
         decoration:
             BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(7.r))),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(7.r)),
@@ -25,9 +26,9 @@ class HomeGridTile extends StatelessWidget {
               ),
             ),
             8.h.heightBox,
-            'Space Falcon Announces Strategic Partnership with AV Star Capital.'
+            homeModel.title!
                 .text
-                .size(12.sp)
+                .size(12.sp).align(TextAlign.start)
                 .maxLines(3)
                 .fontWeight(FontWeight.w600)
                 .make(),
@@ -35,8 +36,7 @@ class HomeGridTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                '23 May 2023'
-                    .text
+                DateFormat("dd MMM yy").format(homeModel.createdAt!).text
                     .size(6.sp)
                     .maxLines(1)
                     .color(const Color(0xff808080))

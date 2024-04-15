@@ -1,10 +1,11 @@
-import 'package:blog_app/data/repositories/auth_repo.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../core/constants/app_strings.dart';
 import '../../core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'core/router/router_imports.dart';
+import 'data/repositories/auth_repo.dart';
+import 'data/repositories/post_repo.dart';
 import 'data/repositories/repository.dart';
 import 'data/repositories/tags_repo.dart';
 
@@ -13,6 +14,7 @@ void main() {
     create: (context) => Repository(
       tagsRepo: TagsRepo(),
       authRepo: AuthRepo(),
+      postRepo: PostRepo()
     ),
     child: MyApp(),
   ));

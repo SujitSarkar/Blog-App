@@ -8,11 +8,14 @@ class LoginViewModel {
   final TextEditingController email = TextEditingController();
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> loginFormKey = GlobalKey();
+  final VelocityBloc<bool> isLoadingBloc = VelocityBloc<bool>(false);
 
   Future<void> login(BuildContext context) async {
     if (!loginFormKey.currentState!.validate()) {
       return;
     }
+
+    isLoadingBloc.onUpdateData(true);
     try {
       final LoginModel loginModel = await repository.authRepo
           .userLogin(email: email.text.trim(), password: password.text);
@@ -24,5 +27,6 @@ class LoginViewModel {
       // ignore: use_build_context_synchronously
       VxToast.show(context, msg: e.toString());
     }
+    isLoadingBloc.onUpdateData(false);
   }
 }
