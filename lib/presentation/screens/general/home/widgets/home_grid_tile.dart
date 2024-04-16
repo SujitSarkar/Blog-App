@@ -16,15 +16,18 @@ class HomeGridTile extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(7.r)),
-              child: CachedNetworkImage(
-                imageUrl: homeModel.featuredimage!,
-                errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
-                placeholder: (context, url) => const LoadingWidget(),
-                height: 118.h,
-                width: double.infinity,
-                fit: BoxFit.cover,
+            Hero(
+              tag: Key(homeModel.id.toString()),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(7.r)),
+                child: CachedNetworkImage(
+                  imageUrl: homeModel.featuredimage!,
+                  errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
+                  placeholder: (context, url) => const LoadingWidget(),
+                  height: 118.h,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             8.h.heightBox,

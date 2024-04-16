@@ -1,5 +1,6 @@
 part of 'tags_imports.dart';
 
+@RoutePage()
 class Tags extends StatefulWidget {
   const Tags({super.key});
 
@@ -25,7 +26,9 @@ class _TagsState extends State<Tags> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  AutoRouter.of(context).push(const AddTagsRoute());
+                },
                 icon: const Icon(
                   FeatherIcons.plus,
                   size: 24,

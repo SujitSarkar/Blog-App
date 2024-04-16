@@ -1,14 +1,39 @@
 part of 'widget_imports.dart';
 
 class MyPostGridTile extends StatelessWidget {
-  final int index;
+  final MyPost myPost;
 
-  const MyPostGridTile({super.key, required this.index});
+  const MyPostGridTile({super.key, required this.myPost});
 
   @override
   Widget build(BuildContext context) {
+    final featuredimage = myPost.featuredimage.toString().prepend(ApiConstant.baseUrl).replaceAll('public','storage');
     return InkWell(
-      onTap: () => AutoRouter.of(context).push(HomeDetailsRoute(homeModel: HomeModel())),
+      onTap: (){
+        HomeModel homeModel = HomeModel(
+          id: myPost.id,
+    name: null,
+    email: null,
+    emailVerifiedAt: null,
+    currentTeamId: null,
+    profilePhotoPath: '',
+    about: '',
+    createdAt: myPost.createdAt,
+    updatedAt: myPost.updatedAt,
+    userId: myPost.userId,
+    title: myPost.title,
+    slug: myPost.slug,
+    featuredimage: featuredimage,
+    body: myPost.body,
+    status: myPost.status,
+    like: myPost.like,
+    dislike: myPost.dislike,
+    views: myPost.views,
+    profilePhotoUrl: null,
+        );
+        AutoRouter.of(context).push(HomeDetailsRoute(homeModel: homeModel));
+      },
+      // onTap: () => A
       child: Container(
         width: double.infinity,
         decoration:
@@ -16,13 +41,18 @@ class MyPostGridTile extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(7.r)),
-              child: Image.asset(
-                Assets.assetsImagesNetflix,
-                height: 118.h,
-                width: double.infinity,
-                fit: BoxFit.cover,
+            Hero(
+              tag: Key(myPost.id.toString()),
+              child: ClipRRect(
+                borderRadius: BorderRadius.all(Radius.circular(7.r)),
+                child: CachedNetworkImage(
+                  imageUrl: featuredimage,
+                  errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
+                  placeholder: (context, url) => const LoadingWidget(),
+                  height: 118.h,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
             8.h.heightBox,
@@ -31,7 +61,7 @@ class MyPostGridTile extends StatelessWidget {
               children: [
                 Expanded(
                   child:
-                      'Space Falcon Announces Strategic Partnership with AV Star Capital.'
+                      '${myPost.title}'
                           .text
                           .size(12.sp)
                           .maxLines(3)

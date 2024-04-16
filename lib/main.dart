@@ -5,6 +5,7 @@ import '../../core/themes/app_themes.dart';
 import 'package:flutter/material.dart';
 import 'core/router/router_imports.dart';
 import 'data/repositories/auth_repo.dart';
+import 'data/repositories/category_repo.dart';
 import 'data/repositories/post_repo.dart';
 import 'data/repositories/repository.dart';
 import 'data/repositories/tags_repo.dart';
@@ -14,7 +15,8 @@ void main() {
     create: (context) => Repository(
       tagsRepo: TagsRepo(),
       authRepo: AuthRepo(),
-      postRepo: PostRepo()
+      postRepo: PostRepo(),
+      categoryRepo: CategoryRepo()
     ),
     child: MyApp(),
   ));

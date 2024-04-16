@@ -5,6 +5,14 @@ class ProfileViewModel {
   ProfileViewModel({required this.repository});
 
   final VelocityBloc<bool> isLoadingBloc = VelocityBloc<bool>(false);
+  final VelocityBloc<ProfileModel> profileModelBloc = VelocityBloc(ProfileModel());
+
+  Future<void> fetchUserProfileData()async{
+    final result = await repository.postRepo.getUserPorofile();
+    if(result.status!=null && result.status ==1){
+      profileModelBloc.onUpdateData(result);
+    }
+  }
 
   Future<void> logout(BuildContext context) async {
     isLoadingBloc.onUpdateData(true);

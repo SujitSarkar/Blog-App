@@ -10,7 +10,7 @@ class HomeDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title:
-            homeModel.title!
+            '${homeModel.title}'
                 .text
                 .ellipsis
                 .make(),
@@ -19,19 +19,22 @@ class HomeDetails extends StatelessWidget {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(7.r)),
-            child: CachedNetworkImage(
-              imageUrl: homeModel.featuredimage!,
-              errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
-              placeholder: (context, url) => const LoadingWidget(),
-              height: 200.h,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          Hero(
+            tag: Key(homeModel.id.toString()),
+            child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(7.r)),
+              child: CachedNetworkImage(
+                imageUrl: homeModel.featuredimage??'',
+                errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
+                placeholder: (context, url) => const LoadingWidget(),
+                height: 200.h,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           12.h.heightBox,
-          homeModel.title!
+          '${homeModel.title}'
               .text
               .size(16.sp)
               .fontWeight(FontWeight.w600)
@@ -66,7 +69,7 @@ class HomeDetails extends StatelessWidget {
               '${homeModel.dislike??0}'.text.size(12.sp).fontWeight(FontWeight.w400).make(),
             ],
           ),
-          HtmlWidget(homeModel.body!, renderMode: RenderMode.column),
+          HtmlWidget(homeModel.body??'', renderMode: RenderMode.column),
         ],
       ),
     );

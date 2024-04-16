@@ -3,16 +3,23 @@ part of 'remote_imports.dart';
 class ApiClient {
   late BaseOptions baseOptions;
   late Dio dio;
+  Options options = Options();
 
   ApiClient() {
-    baseOptions = BaseOptions(baseUrl: ApiConstant.baseUrl);
+    baseOptions = BaseOptions(baseUrl: ApiConstant.apiBaseUrl);
     dio = Dio(baseOptions);
     dio.interceptors.add(PrettyDioLogger());
   }
 
-  Future<Response> getRequest({required String path}) async {
+  Future<Response> getRequest({required String path, bool isTokenRequired=false}) async {
+    if(isTokenRequired){
+      final token = await Utils.getToken();
+    options =
+        Options(headers: {'Authorization': 'Bearer $token'});
+    }
+    
     try {
-      Response response = await dio.get(path);
+      Response response = await dio.get(path,options: options);
       return response;
     } on DioException catch (e) {
       if (e.response != null) {

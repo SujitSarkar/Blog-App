@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:blog_app/presentation/widgets/widgets_imports.dart';
+import 'package:blog_app/data/data_sources/remote/api_constant.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:velocity_bloc/velocity_bloc.dart';
 
@@ -14,6 +14,8 @@ import '../../../../core/router/router_imports.gr.dart';
 import '../../../../data/models/message_model.dart';
 import '../../../../data/repositories/repository.dart';
 import '../../../../utils/utils.dart';
+import '../../../widgets/widgets_imports.dart';
+import 'profile_model.dart';
 import 'widgets/widget_imports.dart';
 
 part 'profile.dart';
