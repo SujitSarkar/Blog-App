@@ -8,7 +8,7 @@ class MyPostGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AutoRouter.of(context).push(const HomeDetailsRoute()),
+      onTap: () => AutoRouter.of(context).push(HomeDetailsRoute(homeModel: HomeModel())),
       child: Container(
         width: double.infinity,
         decoration:

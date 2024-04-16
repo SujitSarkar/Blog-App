@@ -8,6 +8,7 @@ Add this ```@RoutePage()``` above the UI class <br>
 Now run this command to generate routes:
 ```
 dart run build_runner build
+dart run build_runner build --delete-conflicting-outputs
 ```
 
 ## Create Asset class of pubspec.yaml assets

@@ -8,7 +8,7 @@ class HomeGridTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => AutoRouter.of(context).push(const HomeDetailsRoute()),
+      onTap: () => AutoRouter.of(context).push(HomeDetailsRoute(homeModel: homeModel)),
       child: Container(
         width: double.infinity,
         decoration:
@@ -18,8 +18,10 @@ class HomeGridTile extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.all(Radius.circular(7.r)),
-              child: Image.asset(
-                Assets.assetsImagesNetflix,
+              child: CachedNetworkImage(
+                imageUrl: homeModel.featuredimage!,
+                errorWidget: (context, url, error) => const Icon(Icons.error,color: Colors.grey),
+                placeholder: (context, url) => const LoadingWidget(),
                 height: 118.h,
                 width: double.infinity,
                 fit: BoxFit.cover,
@@ -36,17 +38,21 @@ class HomeGridTile extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                DateFormat("dd MMM yy").format(homeModel.createdAt!).text
-                    .size(6.sp)
-                    .maxLines(1)
-                    .color(const Color(0xff808080))
-                    .fontWeight(FontWeight.w600)
-                    .make(),
+                Expanded(
+                  child: homeModel.createdAt!
+                      .timeAgo()
+                      .text
+                      .size(6.sp)
+                      .maxLines(1)
+                      .color(const Color(0xff808080))
+                      .fontWeight(FontWeight.w600)
+                      .make() ,
+                ),
                 CircleAvatar(
                   backgroundColor: AppColors.primaryColor.withOpacity(0.3),
                   radius: 3,
                 ),
-                '4 min read'
+                '${homeModel.views} views'
                     .text
                     .size(6.sp)
                     .maxLines(1)
