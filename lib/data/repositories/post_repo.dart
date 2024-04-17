@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:blog_app/presentation/screens/general/profile/profile_imports.dart';
-import 'package:blog_app/presentation/screens/general/profile/profile_model.dart';
 import 'package:dio/dio.dart';
 import 'package:velocity_x/velocity_x.dart';
 import '../../presentation/screens/general/home/home_model.dart';
+import '../../presentation/screens/general/profile/profile_model.dart';
 import '../data_sources/remote/api_endpoint_url.dart';
 import '../data_sources/remote/remote_imports.dart';
 
