@@ -1,12 +1,12 @@
-part of 'add_tags_imports.dart';
+part of 'add_category_imports.dart';
 
-class AddTagsViewModel {
+class AddCategoryViewModel{
   final Repository repository;
 
-  AddTagsViewModel({required this.repository});
+  AddCategoryViewModel({required this.repository});
 
   final VelocityBloc<bool> isLoading = VelocityBloc(false);
-  final GlobalKey<FormState> addTagGlobalKey = GlobalKey();
+  final GlobalKey<FormState> addCategoryGlobalKey = GlobalKey();
   final TextEditingController titleController = TextEditingController();
   final TextEditingController slugController = TextEditingController();
 
@@ -20,18 +20,18 @@ class AddTagsViewModel {
     titleController.dispose();
   }
 
-  Future<void> addNewTags(BuildContext context) async {
-    if (!addTagGlobalKey.currentState!.validate()) {
+  Future<void> addNewCategory(BuildContext context) async {
+    if (!addCategoryGlobalKey.currentState!.validate()) {
       return;
     }
     isLoading.onUpdateData(true);
-    await repository.tagsRepo
-        .addTags(title: titleController.text, slug: slugController.text)
+    await repository.categoryRepo
+        .addCategory(title: titleController.text, slug: slugController.text)
         .then((result) async{
       if (result.status == 1) {
-        await repository.tagsRepo.getAllTags().then((allTags){
+        await repository.categoryRepo.getAllCategories().then((allCategory){
           VxToast.show(context, msg: result.message ?? '');
-          AutoRouter.of(context).popForced<List<TagsModel>>(allTags);
+          AutoRouter.of(context).popForced<List<CategoryModel>>(allCategory);
         });
       }
     });

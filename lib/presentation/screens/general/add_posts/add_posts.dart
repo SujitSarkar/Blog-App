@@ -8,7 +8,15 @@ class AddPosts extends StatefulWidget {
 }
 
 class _AddPostsState extends State<AddPosts> {
-  QuillController quillController = QuillController.basic();
+  late AddPostsViewModel addPostsViewModel;
+
+  @override
+  void initState() {
+    addPostsViewModel =
+        AddPostsViewModel(repository: context.read<Repository>());
+    addPostsViewModel.addTitleListener();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,39 +37,50 @@ class _AddPostsState extends State<AddPosts> {
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         children: [
-          Stack(
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                child: Image.asset(
-                  Assets.assetsImagesPlaceholder,
-                  height: 240,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      FeatherIcons.camera,
-                      color: AppColors.primaryColor,
-                    ),
-                  ))
-            ],
+          BlocBuilder<VelocityBloc<XFile?>, VelocityState<XFile?>>(
+            bloc: addPostsViewModel.selectedImage,
+            builder: (context, state) {
+              return Stack(
+                children: [
+                  state.data != null
+                      ? Image.file(
+                          File(state.data!.path),
+                          height: 240,
+                          width: 1.sw,
+                          fit: BoxFit.cover,
+                        ).cornerRadius(10.r)
+                      : Image.asset(
+                          Assets.assetsImagesPlaceholder,
+                          height: 240,
+                          width: 1.sw,
+                          fit: BoxFit.cover,
+                        ).cornerRadius(10.r),
+                  Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: IconButton(
+                        onPressed: () {
+                          addPostsViewModel.pickImage(context);
+                        },
+                        icon: const Icon(
+                          FeatherIcons.camera,
+                          color: AppColors.primaryColor,
+                        ),
+                      ))
+                ],
+              );
+            },
           ),
           12.h.heightBox,
           TextFormFieldWidget(
-            controller: TextEditingController(),
+            controller: addPostsViewModel.titleController,
             hintText: 'Title',
             labelText: 'Title',
             textCapitalization: TextCapitalization.sentences,
           ),
           12.h.heightBox,
           TextFormFieldWidget(
-            controller: TextEditingController(),
+            controller: addPostsViewModel.slugController,
             hintText: 'Slug',
             labelText: 'Slug',
             textCapitalization: TextCapitalization.sentences,
@@ -105,7 +124,7 @@ class _AddPostsState extends State<AddPosts> {
           16.h.heightBox,
           QuillToolbar.simple(
             configurations: QuillSimpleToolbarConfigurations(
-              controller: quillController,
+              controller: addPostsViewModel.quillController,
               sharedConfigurations: const QuillSharedConfigurations(
                 locale: Locale('en'),
               ),
@@ -117,7 +136,7 @@ class _AddPostsState extends State<AddPosts> {
               configurations: QuillEditorConfigurations(
                 showCursor: true,
                 placeholder: 'Write here...',
-                controller: quillController,
+                controller: addPostsViewModel.quillController,
                 readOnly: false,
                 sharedConfigurations: const QuillSharedConfigurations(
                   locale: Locale('en'),

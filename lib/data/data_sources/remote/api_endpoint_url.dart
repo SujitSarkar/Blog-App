@@ -10,7 +10,7 @@ class ApiEndpointUrl {
   static const String addTags = '/add-tags';
   static const String updateTags = '/update-tags';
   static const String deleteTags = '/delete-tags/';
-  static const String addcategories = '/add-categories';
+  static const String addCategories = '/add-categories';
   static const String updateCategories = '/update-categories';
   static const String deleteCategories = '/delete-categories/';
   static const String userPosts = '/user-posts';

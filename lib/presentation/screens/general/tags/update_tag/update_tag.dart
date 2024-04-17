@@ -1,25 +1,26 @@
-part of 'add_tags_imports.dart';
+part of 'update_tag_imports.dart';
 
 @RoutePage<List<TagsModel>>()
-class AddTags extends StatefulWidget {
-  const AddTags({super.key});
+class UpdateTag extends StatefulWidget {
+  const UpdateTag({super.key, required this.tagModel});
+  final TagsModel tagModel;
 
   @override
-  State<AddTags> createState() => _AddTagsState();
+  State<UpdateTag> createState() => _UpdateTagState();
 }
 
-class _AddTagsState extends State<AddTags> {
-  late AddTagsViewModel addTagsViewModel;
+class _UpdateTagState extends State<UpdateTag> {
+  late UpdateTagViewModel updateTagViewModel;
 
   @override
   void initState() {
-    addTagsViewModel = AddTagsViewModel(repository: context.read<Repository>());
-    addTagsViewModel.addTitleListener();
+    updateTagViewModel = UpdateTagViewModel(repository: context.read<Repository>());
+    updateTagViewModel.updateTitleListener(widget.tagModel.title??'');
     super.initState();
   }
   @override
   void dispose() {
-    addTagsViewModel.dispose();
+    updateTagViewModel.dispose();
     super.dispose();
   }
 
@@ -27,16 +28,16 @@ class _AddTagsState extends State<AddTags> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: 'Add Tags'.text.size(18.sp).fontWeight(FontWeight.w600).make(),
+        title: 'Update Tags'.text.size(18.sp).fontWeight(FontWeight.w600).make(),
         centerTitle: true,
       ),
       body: Form(
-        key: addTagsViewModel.addTagGlobalKey,
+        key: updateTagViewModel.updateTagGlobalKey,
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           children: [
             TextFormFieldWidget(
-              controller: addTagsViewModel.titleController,
+              controller: updateTagViewModel.titleController,
               labelText: 'Title',
               hintText: 'Title',
               required: true,
@@ -45,7 +46,7 @@ class _AddTagsState extends State<AddTags> {
             ),
             20.h.heightBox,
             TextFormFieldWidget(
-              controller: addTagsViewModel.slugController,
+              controller: updateTagViewModel.slugController,
               labelText: 'Slug',
               hintText: 'Slug',
               required: true,
@@ -53,14 +54,14 @@ class _AddTagsState extends State<AddTags> {
             ),
             30.h.heightBox,
             BlocBuilder<VelocityBloc<bool>, VelocityState<bool>>(
-              bloc: addTagsViewModel.isLoading,
+              bloc: updateTagViewModel.isLoading,
               builder: (context, state) {
                 return SolidButton(
                   onTap: () {
-                    addTagsViewModel.addNewTags(context);
+                    updateTagViewModel.updateTag(context,tagId: widget.tagModel.id.toString());
                   },
                   isLoading: state.data,
-                  child: "Add Tag"
+                  child: "Update Tag"
                       .text
                       .size(16.sp)
                       .color(Colors.white)

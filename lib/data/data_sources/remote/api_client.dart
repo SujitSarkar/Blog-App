@@ -11,15 +11,15 @@ class ApiClient {
     dio.interceptors.add(PrettyDioLogger());
   }
 
-  Future<Response> getRequest({required String path, bool isTokenRequired=false}) async {
-    if(isTokenRequired){
+  Future<Response> getRequest(
+      {required String path, bool isTokenRequired = false}) async {
+    if (isTokenRequired) {
       final token = await Utils.getToken();
-    options =
-        Options(headers: {'Authorization': 'Bearer $token'});
+      options = Options(headers: {'Authorization': 'Bearer $token'});
     }
-    
+
     try {
-      Response response = await dio.get(path,options: options);
+      Response response = await dio.get(path, options: options);
       return response;
     } on DioException catch (e) {
       if (e.response != null) {
@@ -31,10 +31,13 @@ class ApiClient {
   }
 
   Future<Response> postRequest(
-      {required String path, Map<String, dynamic>? body}) async {
-    final token = await Utils.getToken();
-    final Options options =
-        Options(headers: {'Authorization': 'Bearer $token'});
+      {required String path,
+      Map<String, dynamic>? body,
+      bool isTokenRequired = false}) async {
+    if (isTokenRequired) {
+      final token = await Utils.getToken();
+      options = Options(headers: {'Authorization': 'Bearer $token'});
+    }
     try {
       Response response = await dio.post(path, data: body, options: options);
       return response;

@@ -10,6 +10,7 @@ class Tags extends StatefulWidget {
 
 class _TagsState extends State<Tags> {
   late TagsViewModel tagsViewModel;
+
   @override
   void initState() {
     tagsViewModel = TagsViewModel(repository: context.read<Repository>());
@@ -27,7 +28,7 @@ class _TagsState extends State<Tags> {
           actions: [
             IconButton(
                 onPressed: () {
-                  AutoRouter.of(context).push(const AddTagsRoute());
+                  tagsViewModel.goToAddTagsPage(context);
                 },
                 icon: const Icon(
                   FeatherIcons.plus,
@@ -65,14 +66,20 @@ class _TagsState extends State<Tags> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      tagsViewModel.goToUpdateTagPage(context, tagModel: tagsModel);
+                                    },
                                     icon: const Icon(
                                       FeatherIcons.edit2,
                                       size: 20,
                                       color: Colors.green,
                                     )),
                                 IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      deleteTagAlert(
+                                          tagId:
+                                              state.data[index].id.toString());
+                                    },
                                     icon: const Icon(
                                       FeatherIcons.trash,
                                       size: 20,
@@ -88,5 +95,37 @@ class _TagsState extends State<Tags> {
                 return const SizedBox.shrink();
               }
             }));
+  }
+
+  void deleteTagAlert({required String tagId}) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: const Text("Delete this tag?"),
+              actions: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('NO',
+                        style: TextStyle(color: Colors.green))),
+                BlocBuilder<VelocityBloc<bool>, VelocityState<bool>>(
+                  bloc: tagsViewModel.isLoading,
+                  builder: (context, state) {
+                    return TextButton(
+                        onPressed: () {
+                          tagsViewModel.deleteTags(context, tagId: tagId);
+                        },
+                        child: state.data
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator())
+                            : const Text(
+                                'YES',
+                                style: TextStyle(color: Colors.red),
+                              ));
+                  },
+                )
+              ],
+            ));
   }
 }
