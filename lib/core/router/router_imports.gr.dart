@@ -66,7 +66,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       );
     },
     CategoriesRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i14.AutoRoutePage<_i15.CategoryModel>(
         routeData: routeData,
         child: const _i4.Categories(),
       );
@@ -112,7 +112,7 @@ abstract class $AppRouter extends _i14.RootStackRouter {
       );
     },
     TagsRoute.name: (routeData) {
-      return _i14.AutoRoutePage<dynamic>(
+      return _i14.AutoRoutePage<_i16.TagsModel>(
         routeData: routeData,
         child: const _i11.Tags(),
       );

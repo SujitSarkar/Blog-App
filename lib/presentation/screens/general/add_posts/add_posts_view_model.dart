@@ -6,10 +6,14 @@ class AddPostsViewModel {
 
   final QuillController quillController = QuillController.basic();
   final ImagePicker picker = ImagePicker();
-  final VelocityBloc<XFile?> selectedImage = VelocityBloc(null);
-  final VelocityBloc<bool> inLoading = VelocityBloc(false);
+
   final TextEditingController titleController = TextEditingController();
   final TextEditingController slugController = TextEditingController();
+
+  final VelocityBloc<XFile?> selectedImage = VelocityBloc(null);
+  final VelocityBloc<bool> inLoading = VelocityBloc(false);
+  final VelocityBloc<TagsModel?> selectedTagBloc = VelocityBloc(null);
+  final VelocityBloc<CategoryModel?> selectedCategoryBloc = VelocityBloc(null);
 
   void addTitleListener() {
     titleController.addListener(() {
@@ -21,7 +25,6 @@ class AddPostsViewModel {
     titleController.dispose();
   }
 
-
   Future<void> pickImage(BuildContext context) async {
     await picker.pickImage(source: ImageSource.gallery).then((image) {
       if (image != null) {
@@ -30,5 +33,13 @@ class AddPostsViewModel {
         VxToast.show(context, msg: 'No image selected');
       }
     });
+  }
+
+  void updateSelectedTag(TagsModel? model){
+    selectedTagBloc.onUpdateData(model);
+  }
+
+  void updateSelectedCategory(CategoryModel? model){
+    selectedCategoryBloc.onUpdateData(model);
   }
 }

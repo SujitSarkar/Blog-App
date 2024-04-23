@@ -1,6 +1,6 @@
 part of 'categories_imports.dart';
 
-@RoutePage()
+@RoutePage<CategoryModel>()
 class Categories extends StatefulWidget {
   const Categories({super.key});
 
@@ -56,6 +56,11 @@ class _CategoriesState extends State<Categories> {
                 itemBuilder: (context, index) => ListTile(
                   contentPadding: EdgeInsets.zero,
                   dense: true,
+                  onTap: () {
+                            if(AutoRouter.of(context).canPop()){
+                              AutoRouter.of(context).popForced<CategoryModel>(state.data[index]);
+                            }
+                          },
                   leading: '${index + 1}'.text.size(14.sp).make(),
                   title: '${state.data[index].title}'.text.size(14.sp).make(),
                   trailing: SizedBox(

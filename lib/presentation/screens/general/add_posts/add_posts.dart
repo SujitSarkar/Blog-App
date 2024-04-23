@@ -64,7 +64,7 @@ class _AddPostsState extends State<AddPosts> {
                         },
                         icon: const Icon(
                           FeatherIcons.camera,
-                          color: AppColors.primaryColor,
+                          color: Colors.blue,
                         ),
                       ))
                 ],
@@ -86,40 +86,73 @@ class _AddPostsState extends State<AddPosts> {
             textCapitalization: TextCapitalization.sentences,
           ),
           16.h.heightBox,
-          CustomCard(
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                'Tags'.text.size(16.sp).fontWeight(FontWeight.w500).make(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 18.sp,
-                  color: AppColors.secondaryColor,
-                )
-              ],
-            ),
+          BlocBuilder<VelocityBloc<TagsModel?>, VelocityState<TagsModel?>>(
+            bloc: addPostsViewModel.selectedTagBloc,
+            builder: (context, state) {
+              return CustomCard(
+                onTap: () async {
+                  final TagsModel? tagModel = await AutoRouter.of(context)
+                      .push<TagsModel>(const TagsRoute());
+                  addPostsViewModel.updateSelectedTag(tagModel);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    state.data != null
+                        ? state.data!.title!.text
+                            .size(16.sp)
+                            .fontWeight(FontWeight.w500)
+                            .make()
+                        : 'Tags'
+                            .text
+                            .size(16.sp)
+                            .fontWeight(FontWeight.w500)
+                            .make(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18.sp,
+                      color: AppColors.secondaryColor,
+                    )
+                  ],
+                ),
+              );
+            },
           ),
           16.h.heightBox,
-          CustomCard(
-            onTap: () {},
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                'Categories'
-                    .text
-                    .size(16.sp)
-                    .fontWeight(FontWeight.w500)
-                    .make(),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 18.sp,
-                  color: AppColors.secondaryColor,
-                )
-              ],
-            ),
+          BlocBuilder<VelocityBloc<CategoryModel?>, VelocityState<CategoryModel?>>(
+            bloc: addPostsViewModel.selectedCategoryBloc,
+            builder: (context, state) {
+              return CustomCard(
+                onTap: () async {
+                  final CategoryModel? categoryModel =
+                      await AutoRouter.of(context)
+                          .push<CategoryModel>(const CategoriesRoute());
+                  addPostsViewModel.updateSelectedCategory(categoryModel);
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    state.data !=null? state.data!.title!
+                        .text
+                        .size(16.sp)
+                        .fontWeight(FontWeight.w500)
+                        .make()
+                        : 'Categories'
+                        .text
+                        .size(16.sp)
+                        .fontWeight(FontWeight.w500)
+                        .make(),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 18.sp,
+                      color: AppColors.secondaryColor,
+                    )
+                  ],
+                ),
+              );
+            },
           ),
           16.h.heightBox,
           QuillToolbar.simple(
